@@ -1,3 +1,18 @@
 spring:
   application:
     name: learning_service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/learning_service
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+
+server:
+  port: 9008
