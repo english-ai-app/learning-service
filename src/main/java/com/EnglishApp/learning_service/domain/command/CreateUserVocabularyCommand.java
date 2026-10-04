@@ -9,4 +9,5 @@ public class CreateUserVocabularyCommand implements Command {
     private Long wordId;
     private Long collectionId;
     private String source;
+    private String imageUrl;
 }

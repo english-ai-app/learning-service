@@ -32,6 +32,50 @@ public class UserVocabularyMediaServiceImpl implements UserVocabularyMediaServic
     private final StorageProvider storageProvider;
     private final StorageProperties storageProperties;
 
+    @Override
+    public String uploadPending(Long userId, MultipartFile file) {
+        if (userId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "userId is required");
+        }
+        validateFile(file);
+        String objectKey = objectKey(userId, file.getOriginalFilename(), file.getContentType());
+        try {
+            storageProvider.upload(objectKey, file.getContentType(), file.getInputStream(), file.getSize());
+            return storageProvider.getUrl(objectKey);
+        } catch (IOException | RuntimeException exception) {
+            try {
+                storageProvider.delete(objectKey);
+            } catch (RuntimeException cleanupException) {
+                exception.addSuppressed(cleanupException);
+            }
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not store image", exception);
+        }
+    }
+
+    @Override
+    public void attachToVocabulary(UserVocabulary vocabulary, String imageUrl) {
+        if (imageUrl == null || imageUrl.isBlank()) {
+            return;
+        }
+        String objectKey;
+        try {
+            objectKey = storageProvider.resolveObjectKey(imageUrl);
+        } catch (IllegalArgumentException exception) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid imageUrl", exception);
+        }
+        String expectedPrefix = "user-vocab/" + vocabulary.getUserId() + "/";
+        if (!objectKey.startsWith(expectedPrefix) || objectKey.contains("..")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid imageUrl");
+        }
+        mediaRepository.save(UserVocabularyMedia.builder()
+                .userVocabulary(vocabulary)
+                .mediaUrl(objectKey)
+                .mediaType(MEDIA_TYPE_IMAGE)
+                .sourceType(SOURCE_TYPE_USER)
+                .primary(true)
+                .build());
+    }
+
     @Transactional
     @Override
     public UserVocabularyMedia upload(Long vocabularyId, Long userId, MultipartFile file) {

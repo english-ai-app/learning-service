@@ -15,4 +15,6 @@ public interface StorageProvider {
     void delete(String objectKey);
 
     String getUrl(String objectKey);
+
+    String resolveObjectKey(String url);
 }

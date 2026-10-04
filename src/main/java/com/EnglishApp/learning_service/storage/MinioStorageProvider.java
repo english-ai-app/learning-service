@@ -69,4 +69,14 @@ public class MinioStorageProvider implements StorageProvider {
 	public String getUrl(String objectKey) {
 		return properties.getMinioEndpoint().replaceAll("/$", "") + "/" + properties.getMinioBucket() + "/" + objectKey;
 	}
+
+	@Override
+	public String resolveObjectKey(String url) {
+		String prefix = properties.getMinioEndpoint().replaceAll("/$", "")
+				+ "/" + properties.getMinioBucket() + "/";
+		if (!url.startsWith(prefix)) {
+			throw new IllegalArgumentException("Image URL does not belong to configured storage");
+		}
+		return url.substring(prefix.length());
+	}
 }

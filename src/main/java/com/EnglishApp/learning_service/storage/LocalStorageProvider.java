@@ -47,6 +47,15 @@ public class LocalStorageProvider implements StorageProvider {
 		return baseUrl == null || baseUrl.isBlank() ? objectKey : baseUrl.replaceAll("/$", "") + "/" + objectKey;
 	}
 
+	@Override
+	public String resolveObjectKey(String url) {
+		String baseUrl = properties.getPublicBaseUrl();
+		if (baseUrl == null || baseUrl.isBlank() || !url.startsWith(baseUrl.replaceAll("/$", "") + "/")) {
+			return url;
+		}
+		return url.substring(baseUrl.replaceAll("/$", "").length() + 1);
+	}
+
 	private Path resolve(String objectKey) {
 		Path target = root.resolve(objectKey).normalize();
 		if (!target.startsWith(root)) {
