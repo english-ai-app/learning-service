@@ -9,4 +9,6 @@ public interface UserVocabularyMediaRepository extends JpaRepository<UserVocabul
     List<UserVocabularyMedia> findByUserVocabularyId(Long userVocabularyId);
 
     List<UserVocabularyMedia> findByUserVocabularyIdAndPrimary(Long userVocabularyId, Boolean primary);
+
+    boolean existsByUserVocabularyIdAndMediaUrl(Long userVocabularyId, String mediaUrl);
 }

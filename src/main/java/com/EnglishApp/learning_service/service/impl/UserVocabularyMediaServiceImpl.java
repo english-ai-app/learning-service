@@ -67,6 +67,9 @@ public class UserVocabularyMediaServiceImpl implements UserVocabularyMediaServic
         if (!objectKey.startsWith(expectedPrefix) || objectKey.contains("..")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid imageUrl");
         }
+        if (mediaRepository.existsByUserVocabularyIdAndMediaUrl(vocabulary.getId(), objectKey)) {
+            return;
+        }
         mediaRepository.save(UserVocabularyMedia.builder()
                 .userVocabulary(vocabulary)
                 .mediaUrl(objectKey)

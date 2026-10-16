@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface VocabularyCollectionItemRepository
-        extends JpaRepository<VocabularyCollectionItem, VocabularyCollectionItemId> {
+public interface VocabularyCollectionItemRepository extends JpaRepository<VocabularyCollectionItem, VocabularyCollectionItemId> {
     List<VocabularyCollectionItem> findByCollectionId(Long collectionId);
 
     List<VocabularyCollectionItem> findByUserVocabularyId(Long userVocabularyId);

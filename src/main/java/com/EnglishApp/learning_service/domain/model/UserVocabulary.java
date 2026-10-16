@@ -40,7 +40,7 @@ public class UserVocabulary {
     private Long sourceRefId;
 
     @Column(nullable = false)
-    private Byte status;
+    private Integer status;
 
     @Column(name = "added_at", nullable = false, insertable = false, updatable = false)
     private LocalDateTime addedAt;

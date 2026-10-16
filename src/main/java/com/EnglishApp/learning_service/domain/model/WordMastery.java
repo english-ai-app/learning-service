@@ -32,25 +32,25 @@ public class WordMastery {
     @JoinColumn(name = "user_vocabulary_id", nullable = false)
     private UserVocabulary userVocabulary;
 
-    @Column(name = "overall_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "overall_score", precision = 5, scale = 2)
     private BigDecimal overallScore;
 
-    @Column(name = "recognition_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "recognition_score", precision = 5, scale = 2)
     private BigDecimal recognitionScore;
 
-    @Column(name = "meaning_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "meaning_score", precision = 5, scale = 2)
     private BigDecimal meaningScore;
 
-    @Column(name = "recall_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "recall_score", precision = 5, scale = 2)
     private BigDecimal recallScore;
 
-    @Column(name = "listening_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "listening_score", precision = 5, scale = 2)
     private BigDecimal listeningScore;
 
-    @Column(name = "context_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "context_score", precision = 5, scale = 2)
     private BigDecimal contextScore;
 
-    @Column(name = "speaking_score", nullable = false, precision = 5, scale = 2)
+    @Column(name = "speaking_score", precision = 5, scale = 2)
     private BigDecimal speakingScore;
 
     @Column(name = "correct_count", nullable = false)
