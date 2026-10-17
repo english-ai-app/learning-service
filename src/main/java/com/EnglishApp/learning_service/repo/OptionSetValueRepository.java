@@ -10,4 +10,8 @@ public interface OptionSetValueRepository extends JpaRepository<OptionSetValue, 
     List<OptionSetValue> findByOptionSetId(Long optionSetId);
 
     Optional<OptionSetValue> findByOptionSetIdAndCode(Long optionSetId, String code);
+
+    List<OptionSetValue> findByOptionSet_Code(String optionSetCode);
+
+    Optional<OptionSetValue> findByOptionSet_CodeAndCode(String optionSetCode, String code);
 }

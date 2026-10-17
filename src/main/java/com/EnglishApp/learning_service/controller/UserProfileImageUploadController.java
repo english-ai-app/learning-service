@@ -32,7 +32,7 @@ public class UserProfileImageUploadController {
 
     private final StorageProvider storageProvider;
     private final StorageProperties storageProperties;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Map<String, String> upload(
